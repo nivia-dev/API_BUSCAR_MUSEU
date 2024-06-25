@@ -3,6 +3,7 @@ import axios from 'axios';
 import Filters from '../components/Filters';
 import Results from '../components/Results';
 import Details from '../components/Details';
+import BackgroundImage from '../../public/museuImg.png'
 
 function Home() {
     const [buscaTermo, setBuscaTermo] = useState('');
@@ -10,37 +11,91 @@ function Home() {
     const [dadosFiltrados, setDadosFiltrados] = useState([]);
     const [selecionadoItem, setSelecionadoItem] = useState(null);
     const [pagina, setPagina] = useState(1);
-    const [limite, setLimite] = useState(20);
+    const [limite] = useState(20);
+    const [ufs, setUfs] = useState([]);
+    const [ufSelecionado, setUfSelecionado] = useState('');
+    const [municipios, setMunicipios] = useState([]);
+    const [municipioSelecionado, setMunicipioSelecionado] = useState('');
+    
+    useEffect(() => {
+        if (selecionadaChaves.includes('UF')) {
+            fetchUfs();
+        }
+    }, [selecionadaChaves]);
 
     useEffect(() => {
-        fetchData();
-    }, [pagina, buscaTermo, selecionadaChaves]);
+        if (buscaTermo) {
+            fetchSearchData();
+        } else {
+            fetchData();
+        }
+    }, [pagina, ufSelecionado, municipioSelecionado, buscaTermo]);
+
+    const fetchUfs = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/ufs');
+            setUfs(response.data);
+        } catch (error) {
+            console.error('Erro ao buscar UFs', error);
+        }
+    };
+
+    const fetchMunicipios = async (uf) => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/municipios', {
+                params: { uf }
+            });
+            setMunicipios(response.data);
+        } catch (error) {
+            console.error('Erro ao buscar municípios', error);
+        }
+    };
 
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/museus', {
-             params: {
-                pagina,
-                limite
-             }   
+                params: {
+                    pagina,
+                    limite,
+                    uf: ufSelecionado || undefined,
+                    municipio: municipioSelecionado || undefined
+                }
             });
-            const data = response.data;
-            const resultados = data.filter(item =>
-                selecionadaChaves.some(key =>
-                  item[key] && item[key].toString().toLowerCase().includes(buscaTermo.toLowerCase())  
-                )
-            );
-            setDadosFiltrados(resultados);
+            setDadosFiltrados(response.data);
         } catch (error) {
-            console.error('Erro ao buscar dados', error)
+            console.error('Erro ao buscar dados', error);
+        }
+    };
+
+    const fetchSearchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/search', {
+                params: {
+                    termo: buscaTermo
+                }
+            });
+            setDadosFiltrados(response.data);
+        } catch (error) {
+            console.error('Erro ao buscar dados', error);
         }
     };
 
     const mudancaCheckbox = (key) => {
-        setSelecionadaChaves(prevkeys =>
-            prevkeys.includes(key) ? prevkeys.filter(k =>
-                k !== key) : [...prevkeys, key]
-        );
+        setSelecionadaChaves(prevKeys => {
+            const newKeys = prevKeys.includes(key) ? prevKeys.filter(k => k !== key) : [...prevKeys, key];
+            
+            if (!newKeys.includes('UF')) {
+                setUfSelecionado('');
+                setMunicipioSelecionado('');
+                setMunicipios([]);
+            }
+            if (!newKeys.includes('Nome do Museu')) {
+                setBuscaTermo('');
+            }
+           
+            
+            return newKeys;
+        });
     };
 
     const cliqueItem = (item) => {
@@ -52,37 +107,58 @@ function Home() {
             setPagina(novaPagina);
         }
     };
-    
+
+    const handleUfChange = (uf) => {
+        setUfSelecionado(uf);
+        setMunicipioSelecionado('');
+        if (uf) {
+            fetchMunicipios(uf);
+        } else {
+            setMunicipios([]);
+        }
+    };
+
     return (
         <div className='container mt-4'>
+            <h2>Museus Brasileiros</h2>
+            <h4>Encontre um na sua cidade</h4>
             <div className='row'>
-                
                 <div className='col-md-4'>
                     <Filters
                         selecionadaChaves={selecionadaChaves}
                         mudancaCheckbox={mudancaCheckbox}
                         setBuscaTermo={setBuscaTermo}
+                        ufs={ufs}
+                        setUfSelecionado={handleUfChange}
+                        ufSelecionado={ufSelecionado}
+                        municipios={municipios}
+                        setMunicipioSelecionado={setMunicipioSelecionado}
+                        municipioSelecionado={municipioSelecionado}
                     />
                 </div>
-
-                <div className='col-md-8'>
-                    <Results
-                    dadosFiltrados={dadosFiltrados}
-                    selecionadaChaves={selecionadaChaves}
-                    cliqueItem={cliqueItem} />
+                <div className='col-md-8' style={{ position: 'relative' }}>
+                
+                    <div>
+                      
+                        <Results
+                            dadosFiltrados={dadosFiltrados}
+                            cliqueItem={cliqueItem}
+                    />
+                    </div>
+                 
+                   
                 </div>
-
+            
+            
             </div>
-
-            <div className='mt-4'>
-                <button onClick={() => mudancaPagina(pagina - 1)} disabled={pagina === 1}>
+            <div className='mt-4 d-flex justify-content-center'>
+                <button  onClick={() => mudancaPagina(pagina - 1)} disabled={pagina === 1}>
                     Página Anterior
                 </button>
-                <button onClick={() => mudancaPagina(pagina + 1)}>
+                <button  onClick={() => mudancaPagina(pagina + 1)}>
                     Próxima Página
                 </button>
             </div>
-
             {selecionadoItem && (
                 <div className='row mt-4'>
                     <div className='col'>

@@ -4,10 +4,13 @@ import '../styles/Header.css';
 function Header() {
     return (
         <header>
+            <figure className='imgMuseu'>
+                <img src="../../public/museuImg.png" alt="" />
+                </figure>
             <nav className='navbar navbar-expand-lg navbar-light '>
                 <div className='container-fluid'>
                     
-                    <button className='navbar-toggler'
+                    <button className='navbar-toggler custom-toggler'
                     type='button'
                     data-bs-toggle='collapse'
                     data-bs-target='#navbarNav'
@@ -15,10 +18,11 @@ function Header() {
                     aria-expanded='false'
                     aria-label='Toggle navigation'>
                     <span className='navbar-toggler-icon'></span>
+                    
                     </button>
 
                     <div className='collapse navbar-collapse' id='navbarNav'>
-                        <ul>
+                        <ul className='navbar-nav custom-navbar-nav'>
                             <li className='nav-item'><Link className='nav-link' to="/">Home</Link></li>
                             <li className='nav-item'><Link className='nav-link' to="/about">Sobre</Link></li>
                             <li className='nav-item'><Link className='nav-link' to="/contact">Contato</Link></li>
