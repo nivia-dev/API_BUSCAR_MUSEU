@@ -15,6 +15,8 @@ main {
 
 main.container{
   max-width:1080px;
+  position: relative;
+  min-height: 100vh; 
 }
 
 main h2, h4 {
@@ -27,6 +29,7 @@ main h2 {
 
 main h4 {
   font-size: 1.2rem;
+  font-weight: 400;
 }
 
 main.mt-3 {
@@ -47,6 +50,9 @@ h5.card-title {
   background-color: var(--cor1);
 }
 
+.custom-row {
+  margin-top: 1.5rem !important;
+}
 .form-check-label {
   display: flex;
 }
@@ -61,7 +67,9 @@ input.form-control {
 }
 
 ul.custom-list-group {
-  --bs-list-group-bg: var(--cor1);
+  --bs-list-group-bg: transparent;
+  font-weight: 600;
+  --bs-list-group-border-color: none;
 }
 
 .mt-4 button {
@@ -69,3 +77,34 @@ ul.custom-list-group {
   margin-inline: 1rem;
 }
 
+.background-image {
+  position: absolute;
+  margin-top: 2.7rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../public/museuImg.png'); /* Substitua pelo caminho da sua imagem */
+  background-size: cover;
+  background-position: center;
+  z-index: -1; /* Coloca a imagem atrás do conteúdo */
+  opacity: 1; /* A imagem é totalmente visível por padrão */
+  transition: opacity 0.5s ease-in-out; /* Transição suave ao mudar a opacidade */
+}
+
+.filtros-selecionados .background-image {
+  opacity: 0.2; /* Reduz a opacidade quando um filtro é selecionado */
+}
+
+.sem-filtros .background-image {
+  opacity: 1; /* Mantém a opacidade total quando nenhum filtro está selecionado */
+}
+
+@media (max-width: 425px) {
+  .background-image {
+    height: 85%;
+    left: -35px;
+    margin-top: 10.8rem;
+  }
+  
+}

@@ -3,7 +3,7 @@ import axios from 'axios';
 import Filters from '../components/Filters';
 import Results from '../components/Results';
 import Details from '../components/Details';
-import BackgroundImage from '../../public/museuImg.png'
+
 
 function Home() {
     const [buscaTermo, setBuscaTermo] = useState('');
@@ -108,42 +108,47 @@ function Home() {
         }
     };
 
-    const handleUfChange = (uf) => {
+    const mudancaUf = (uf) => {
         setUfSelecionado(uf);
         setMunicipioSelecionado('');
         if (uf) {
             fetchMunicipios(uf);
+            fetchData();
         } else {
             setMunicipios([]);
         }
     };
 
+    const algumFiltroSelecionado = selecionadaChaves.includes('Nome do Museu') || ufSelecionado;
+
+
     return (
-        <div className='container mt-4'>
+        <div className={`container mt-4 ${algumFiltroSelecionado ? 'filtros-selecionados' : 'sem-filtros'}`}>
+            <div className="background-image"></div>
             <h2>Museus Brasileiros</h2>
             <h4>Encontre um na sua cidade</h4>
-            <div className='row'>
+            <div className='row custom-row'>
                 <div className='col-md-4'>
                     <Filters
                         selecionadaChaves={selecionadaChaves}
                         mudancaCheckbox={mudancaCheckbox}
                         setBuscaTermo={setBuscaTermo}
                         ufs={ufs}
-                        setUfSelecionado={handleUfChange}
+                        setUfSelecionado={mudancaUf}
                         ufSelecionado={ufSelecionado}
                         municipios={municipios}
                         setMunicipioSelecionado={setMunicipioSelecionado}
                         municipioSelecionado={municipioSelecionado}
                     />
                 </div>
-                <div className='col-md-8' style={{ position: 'relative' }}>
+                <div className='col-md-8'>
                 
                     <div>
-                      
+                    {(selecionadaChaves.includes('Nome do Museu') || ufSelecionado) && (
                         <Results
                             dadosFiltrados={dadosFiltrados}
                             cliqueItem={cliqueItem}
-                    />
+                    />)}
                     </div>
                  
                    
@@ -151,6 +156,7 @@ function Home() {
             
             
             </div>
+            {(selecionadaChaves.includes('Nome do Museu') || ufSelecionado) && (
             <div className='mt-4 d-flex justify-content-center'>
                 <button  onClick={() => mudancaPagina(pagina - 1)} disabled={pagina === 1}>
                     Página Anterior
@@ -159,6 +165,8 @@ function Home() {
                     Próxima Página
                 </button>
             </div>
+            )}
+
             {selecionadoItem && (
                 <div className='row mt-4'>
                     <div className='col'>

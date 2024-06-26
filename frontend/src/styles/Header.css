@@ -75,7 +75,7 @@ ul.custom-navbar-nav {
 }
 
 @media (min-width:1020px) {
-  .imgMuseu {
+  .imgMuseu img {
     width: 10vw;
   }
 }
