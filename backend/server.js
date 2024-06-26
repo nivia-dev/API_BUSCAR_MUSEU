@@ -66,7 +66,7 @@ app.get('/api/municipios', (req, res) => {
   });
 });
 
-app.get('/api/search', (req, res) => {
+app.get('/api/pesquisa', (req, res) => {
   const { termo } = req.query;
   const likeTerm = `%${termo}%`;
   const query = `SELECT * FROM museus WHERE "Nome do Museu" LIKE ?`;

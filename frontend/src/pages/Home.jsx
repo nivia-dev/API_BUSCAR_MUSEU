@@ -69,7 +69,7 @@ function Home() {
 
     const fetchSearchData = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/search', {
+            const response = await axios.get('http://localhost:5000/api/pesquisa', {
                 params: {
                     termo: buscaTermo
                 }
