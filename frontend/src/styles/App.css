@@ -100,11 +100,51 @@ ul.custom-list-group {
   opacity: 1; /* Mantém a opacidade total quando nenhum filtro está selecionado */
 }
 
+/* Estilos página Document*/
+
+.titleDoc {
+  text-align: center;
+}
+
+.paragDoc {
+  padding: 1.5rem 3rem;
+}
+
+.parag {
+  padding-inline: 2rem;
+}
+
+h3.subtitle {
+  font-size: 1.5rem;
+}
+
+h5.topicos {
+  margin: 1 rem 2rem;
+}
+
+.seqExec {
+  padding-right: 2rem;
+}
+
+.estrutura {
+  padding: 1rem;
+}
+
+.paragDoc li {
+  padding-bottom: 0.5rem;
+}
+
 @media (max-width: 425px) {
   .background-image {
     height: 85%;
     left: -35px;
     margin-top: 10.8rem;
   }
-  
+  .paragDoc {
+    padding: 1.5rem;
+  }
+
+  .parag {
+    padding-inline: 1rem;
+  }
 }
