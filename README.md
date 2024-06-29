@@ -4,11 +4,6 @@
 
 Esse projeto visa o desenvolvimento de uma aplicação web que faz busca em um conjunto de dados utilizando filtros conforme preferência do usuário. Nesse caso a busca é por museus brasileiros.
 	
-Interface do usuário: tipografia padronizada; cores monocromáticas com tons do bege ao marrom; menus e botões com contraste de cores e ao passar o mouse o texto se destacará (adotando assim a acessibilidade para pessoas com deficiência visual); uso de ícones e textos alternativos, também para facilitar a acessibilidade. Para dispositivos móveis adotar menu tipo hamburguer.
-
-Experiencia do usuário: clareza, usabilidade e acessibilidade; distinção entre o que é clicável e o que é apenas informativo.
-
-Público-Alvo: artistas plásticos, pintores, escultores e artesãos.Faixa etária: maiores de 18 anos. Gênero: todos. Localização: território nacional.
 
 Instalaçoes necessária
 ---
@@ -37,6 +32,6 @@ No arquivo App.jsx configuramos as rotas. Em main.jsx criamos um ponto de entrad
 
 No arquivo index.html temos a div com id=’root’ que é o container onde será montada toda a nossa aplicação.
 
-Na pasta public onde colocamos todas as imagens e ícones que serão usadas.
+Na pasta public é onde colocamos todas as imagens e ícones que serão usados.
 
 Os detalhes de como construir e executar o projeto estão descritos na página Document.jsx.
