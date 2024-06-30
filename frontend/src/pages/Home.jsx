@@ -33,7 +33,7 @@ function Home() {
 
     const fetchUfs = async () => {
         try {
-            const response = await axios.get (' /api/ufs');
+            const response = await axios.get ('/api/ufs');
             setUfs(response.data);
         } catch (error) {
             console.error('Erro ao buscar UFs', error);
