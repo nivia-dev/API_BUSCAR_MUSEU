@@ -1,4 +1,8 @@
 function Results({ dadosFiltrados, cliqueItem, ufSelecionado }) {
+    //linha de baixo acrescentada
+    if(!Array.isArray(dadosFiltrados)) {
+        return null;
+    }
     return (
         <ul className="list-group custom-list-group">
             {dadosFiltrados.map(item => (

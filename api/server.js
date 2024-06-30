@@ -5,11 +5,12 @@ const db = require('./database');
 const app = express();
 
 app.use(cors());
-
+app.use(express.json());
 
 
 app.get('/api/museus', (req, res) => {
   const { pagina = 1, limite = 20, uf, municipio, buscaTermo } = req.query;
+  console.log('Requisição recebida em /api/museus', req.query); //adicionada linha
   const offset = (pagina - 1) * limite;
 
   let query = `SELECT * FROM museus`;
