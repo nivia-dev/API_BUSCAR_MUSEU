@@ -70,7 +70,7 @@ function Home() {
 
     const fetchSearchData = async () => {
         try {
-            const response = await axios.g/api/pesquisa', {
+            const response = await axios.get('/api/pesquisa', {
                 params: {
                     termo: buscaTermo
                 }
