@@ -33,7 +33,7 @@ function Home() {
 
     const fetchUfs = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/ufs');
+            const response = await axios.get (' /api/ufs');
             setUfs(response.data);
         } catch (error) {
             console.error('Erro ao buscar UFs', error);
@@ -42,7 +42,8 @@ function Home() {
 
     const fetchMunicipios = async (uf) => {
         try {
-            const response = await axios.get('http://localhost:5000/api/municipios', {
+            const response = await axios.get('/api/municipios', {            
+    
                 params: { uf }
             });
             setMunicipios(response.data);
@@ -53,7 +54,7 @@ function Home() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/museus', {
+            const response = await axios.get('/api/museus', {
                 params: {
                     pagina,
                     limite,
@@ -69,7 +70,7 @@ function Home() {
 
     const fetchSearchData = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/pesquisa', {
+            const response = await axios.g/api/pesquisa', {
                 params: {
                     termo: buscaTermo
                 }
