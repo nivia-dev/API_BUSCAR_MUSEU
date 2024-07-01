@@ -16,8 +16,11 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    assetsDir: 'assets'
+    assetsDir: 'assets',
+    publicDir: "public",
   },
-  publicDir: "public",
+  define: {
+    'process.env': process.env
+  }
+  
 });
-cd..assetsDir

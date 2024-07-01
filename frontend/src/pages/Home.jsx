@@ -16,7 +16,8 @@ function Home() {
     const [ufSelecionado, setUfSelecionado] = useState('');
     const [municipios, setMunicipios] = useState([]);
     const [municipioSelecionado, setMunicipioSelecionado] = useState('');
-    
+    const apiBaseUrl = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
         if (selecionadaChaves.includes('UF')) {
             fetchUfs();
@@ -33,7 +34,7 @@ function Home() {
 
     const fetchUfs = async () => {
         try {
-            const response = await axios.get('/api/ufs');
+            const response = await axios.get(`${apiBaseUrl/ufs}`);
             setUfs(response.data);
         } catch (error) {
             console.error('Erro ao buscar UFs', error);
@@ -42,7 +43,7 @@ function Home() {
 
     const fetchMunicipios = async (uf) => {
         try {
-            const response = await axios.get('/api/municipios', {
+            const response = await axios.get(`${apiBaseUrl/municipios}`, {
                 params: { uf }
             });
             setMunicipios(response.data);
@@ -53,7 +54,7 @@ function Home() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('/api/museus', {
+            const response = await axios.get(`${apiBaseUrl/museus}`, {
                 params: {
                     pagina,
                     limite,
@@ -61,7 +62,6 @@ function Home() {
                     municipio: municipioSelecionado || undefined
                 }
             });
-            console.log('Resposta de /api/museus' ,response.data); //linha adicionada
             setDadosFiltrados(response.data);
         } catch (error) {
             console.error('Erro ao buscar dados', error);
@@ -70,12 +70,11 @@ function Home() {
 
     const fetchSearchData = async () => {
         try {
-            const response = await axios.get('/api/pesquisa', {
+            const response = await axios.get(`${apiBaseUrl/pesquisa}`, {
                 params: {
                     termo: buscaTermo
                 }
             });
-            console.log(response.data); //linha adicionada
             setDadosFiltrados(response.data);
         } catch (error) {
             console.error('Erro ao buscar dados', error);
