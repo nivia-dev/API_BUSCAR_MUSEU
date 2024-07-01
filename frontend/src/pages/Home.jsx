@@ -16,7 +16,8 @@ function Home() {
     const [ufSelecionado, setUfSelecionado] = useState('');
     const [municipios, setMunicipios] = useState([]);
     const [municipioSelecionado, setMunicipioSelecionado] = useState('');
-    const apiBaseUrl = process.env.VITE_API_URL;
+    const apiBaseUrl = import.meta.env.MODE === 'production' ? import.meta.env.VITE_API_URL_PRODUCTION : import.meta.env.VITE_API_URL_DEVELOPMENT;
+
     
     useEffect(() => {
         if (selecionadaChaves.includes('UF')) {
