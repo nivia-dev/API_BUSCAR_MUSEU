@@ -16,8 +16,8 @@ function Home() {
     const [ufSelecionado, setUfSelecionado] = useState('');
     const [municipios, setMunicipios] = useState([]);
     const [municipioSelecionado, setMunicipioSelecionado] = useState('');
-    const apiBaseUrl = import.meta.env.VITE_API_URL;
-
+    const apiBaseUrl = process.env.VITE_API_URL;
+    
     useEffect(() => {
         if (selecionadaChaves.includes('UF')) {
             fetchUfs();
@@ -34,7 +34,7 @@ function Home() {
 
     const fetchUfs = async () => {
         try {
-            const response = await axios.get(`${apiBaseUrl/ufs}`);
+            const response = await axios.get(`${apiBaseUrl}/ufs`);
             setUfs(response.data);
         } catch (error) {
             console.error('Erro ao buscar UFs', error);
@@ -43,7 +43,7 @@ function Home() {
 
     const fetchMunicipios = async (uf) => {
         try {
-            const response = await axios.get(`${apiBaseUrl/municipios}`, {
+            const response = await axios.get(`${apiBaseUrl}/municipios`, {
                 params: { uf }
             });
             setMunicipios(response.data);
@@ -54,7 +54,7 @@ function Home() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`${apiBaseUrl/museus}`, {
+            const response = await axios.get(`${apiBaseUrl}/museus`, {
                 params: {
                     pagina,
                     limite,
@@ -70,7 +70,7 @@ function Home() {
 
     const fetchSearchData = async () => {
         try {
-            const response = await axios.get(`${apiBaseUrl/pesquisa}`, {
+            const response = await axios.get(`${apiBaseUrl}/pesquisa`, {
                 params: {
                     termo: buscaTermo
                 }

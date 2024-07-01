@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const db = require('./database');
 
 const app = express();
@@ -7,10 +8,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
 
 app.get('/api/museus', (req, res) => {
   const { pagina = 1, limite = 20, uf, municipio, buscaTermo } = req.query;
-  console.log('Requisição recebida em /api/museus', req.query); //adicionada linha
   const offset = (pagina - 1) * limite;
 
   let query = `SELECT * FROM museus`;
@@ -80,6 +82,10 @@ app.get('/api/pesquisa', (req, res) => {
     }
   });
 });
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+})
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
